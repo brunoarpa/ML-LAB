@@ -95,7 +95,6 @@ def perceptron_single_step_update(
     epsilon = 1e-8
     # Compute the margin value
     margin = label * (np.dot(feature_vector, current_theta) + current_theta_0)
-    
     # Check if the margin condition is violated (with tolerance epsilon)
     if margin <= epsilon:
         new_theta = current_theta + label * feature_vector
@@ -132,12 +131,15 @@ def perceptron(feature_matrix, labels, T):
             (found also after T iterations through the feature matrix).
     """
     # Your code here
-    raise NotImplementedError
+    theta = 0*feature_matrix[0,:]
+    theta_0 = 0
     for t in range(T):
-        for i in get_order(nsamples):
+        for i in get_order(feature_matrix.shape[0]):
             # Your code here
-            raise NotImplementedError
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i,:], labels[i],theta, theta_0)
+            
     # Your code here
+    return theta, theta_0
     raise NotImplementedError
 
 
