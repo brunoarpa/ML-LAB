@@ -92,6 +92,19 @@ def perceptron_single_step_update(
         the updated offset parameter `theta_0` as a floating point number
     """
     # Your code here
+    epsilon = 1e-8
+    # Compute the margin value
+    margin = label * (np.dot(feature_vector, current_theta) + current_theta_0)
+    
+    # Check if the margin condition is violated (with tolerance epsilon)
+    if margin <= epsilon:
+        new_theta = current_theta + label * feature_vector
+        new_theta_0 = current_theta_0 + label
+    else:
+        new_theta = current_theta
+        new_theta_0 = current_theta_0
+        
+    return new_theta, new_theta_0
     raise NotImplementedError
 
 
