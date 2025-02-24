@@ -41,7 +41,7 @@ def hinge_loss_single(feature_vector, label, theta, theta_0):
     # Your code here
     return max(0,1-(label*(np.dot(feature_vector,theta)+theta_0)))
 
-    #raise NotImplementedError
+    raise NotImplementedError
 
 
 
@@ -63,6 +63,8 @@ def hinge_loss_full(feature_matrix, labels, theta, theta_0):
     """
 
     # Your code here
+    return np.average(np.maximum(0,1-labels*(np.matmul(feature_matrix,theta)+theta_0)))
+
     raise NotImplementedError
 
 
