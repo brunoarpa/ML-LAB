@@ -356,6 +356,8 @@ def classifier_accuracy(
         accuracy of the trained classifier on the validation data.
     """
     # Your code here
+    theta, theta_0 = classifier(train_feature_matrix, train_labels, **kwargs)
+    return accuracy(classify(train_feature_matrix, theta, theta_0),train_labels),accuracy(classify(val_feature_matrix, theta, theta_0),val_labels)
     raise NotImplementedError
 
 
@@ -370,7 +372,7 @@ def extract_words(text):
         count as their own words.
     """
     # Your code here
-    raise NotImplementedError
+    #raise NotImplementedError
 
     for c in punctuation + digits:
         text = text.replace(c, ' ' + c + ' ')
@@ -378,7 +380,7 @@ def extract_words(text):
 
 
 
-def bag_of_words(texts, remove_stopword=False):
+def bag_of_words(texts):
     """
     NOTE: feel free to change this code as guided by Section 3 (e.g. remove
     stopwords, add bigrams etc.)
@@ -390,7 +392,9 @@ def bag_of_words(texts, remove_stopword=False):
         integer `index`.
     """
     # Your code here
-    raise NotImplementedError
+    #raise NotImplementedError
+
+    with open("stopwords.txt", "r", encoding="utf-8") as f: stopword = {line.strip() for line in f}
     
     indices_by_word = {}  # maps word to unique index
     for text in texts:
@@ -423,7 +427,7 @@ def extract_bow_feature_vectors(reviews, indices_by_word, binarize=True):
             feature_matrix[i, indices_by_word[word]] += 1
     if binarize:
         # Your code here
-        raise NotImplementedError
+        feature_matrix[feature_matrix > 0] = 1
     return feature_matrix
 
 
