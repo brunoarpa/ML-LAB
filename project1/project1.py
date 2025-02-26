@@ -132,12 +132,12 @@ def perceptron(feature_matrix, labels, T):
     """
     # Your code here
     theta = 0*feature_matrix[0,:]
-    theta_0 = 0
+    theta_0 = 0.0
     for t in range(T):
         for i in get_order(feature_matrix.shape[0]):
             # Your code here
             theta, theta_0 = perceptron_single_step_update(feature_matrix[i,:], labels[i],theta, theta_0)
-            
+
     # Your code here
     return theta, theta_0
     raise NotImplementedError
@@ -171,6 +171,26 @@ def average_perceptron(feature_matrix, labels, T):
             (averaged also over T iterations through the feature matrix).
     """
     # Your code here
+    num_examples = feature_matrix.shape[0]
+    num_features = feature_matrix.shape[1]
+    
+    theta = np.zeros(num_features, dtype=float)
+    theta_0 = 0.0
+
+    theta_sum = np.zeros(num_features, dtype=float)
+    theta0_sum = 0.0
+    
+    for t in range(T):
+        for i in get_order(num_examples):
+            # Your code here
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i,:], labels[i],theta, theta_0)
+            theta_sum += theta
+            theta0_sum += theta_0
+
+    avg_theta = theta_sum / (num_examples*T)
+    avg_theta_0 = theta0_sum / (num_examples*T)
+    # Your code here
+    return avg_theta, avg_theta_0
     raise NotImplementedError
 
 
@@ -202,6 +222,10 @@ def pegasos_single_step_update(
         completed.
     """
     # Your code here
+    if label*((np.dot(theta, feature_vector))+theta_0) <= 1:
+        return (((1-(eta*L))*theta)+(eta*label*feature_vector)), (theta_0+(eta*label))
+    else:
+        return ((1-(eta*L))*theta), theta_0
     raise NotImplementedError
 
 
@@ -234,6 +258,23 @@ def pegasos(feature_matrix, labels, T, L):
         after T iterations through the feature matrix.
     """
     # Your code here
+    num_examples = feature_matrix.shape[0]
+    num_features = feature_matrix.shape[1]
+    
+    theta = np.zeros(num_features, dtype=float)
+    theta_0 = 0.0
+
+    update_count = 0
+
+    for t in range(T):
+        for i in get_order(num_examples):
+            update_count += 1
+            # Your code here
+            eta = 1/(np.sqrt(update_count))
+            theta, theta_0 = pegasos_single_step_update(feature_matrix[i,:], labels[i], L, eta, theta, theta_0)
+
+    # Your code here
+    return theta, theta_0
     raise NotImplementedError
 
 
