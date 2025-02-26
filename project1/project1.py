@@ -312,6 +312,13 @@ def classify(feature_matrix, theta, theta_0):
         should be considered a positive classification.
     """
     # Your code here
+    result_vector = np.matmul(feature_matrix, theta) + theta_0
+    signed_vector = np.sign(result_vector)
+
+    # Handle the case where the result is close to zero
+    signed_vector[np.abs(result_vector) <= 1e-8] = -1
+
+    return signed_vector
     raise NotImplementedError
 
 
