@@ -408,7 +408,7 @@ def bag_of_words(texts):
 
 
 
-def extract_bow_feature_vectors(reviews, indices_by_word, binarize=True):
+def extract_bow_feature_vectors(reviews, indices_by_word, binarize=False):
     """
     Args:
         `reviews` - a list of natural language strings
